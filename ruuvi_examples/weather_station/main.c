@@ -165,7 +165,7 @@ static void readData(void)
     sensor_values.format = WEATHER_STATION_URL_FORMAT;
     sensor_values.temperature = (raw_t < 0) ? 0x8000 : 0x0000; //Sign bit
     if(raw_t < 0) raw_t = 0-raw_t; // disrecard sign
-    sensor_values.temperature |= (((raw_t * 256) / 100) & 0x7F00);//8:8 signed fixed point, Drop decimals
+    sensor_values.temperature |= (((raw_t * 256) / 100) & 0x7FFF);//8:8 signed fixed point, Drop decimals
     sensor_values.pressure = (uint16_t)((raw_p >> 8) - 50000); //Scale into pa, Shift by -50000 pa as per Ruu.vi interface.
     sensor_values.pressure -= sensor_values.pressure % 100; //Drop decimals
     sensor_values.humidity = (uint8_t)(raw_h >> 11); 
